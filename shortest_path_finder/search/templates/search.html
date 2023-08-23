@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Find Shortest Distance</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .btnn {
+      background: #120fc2;
+      background-image: -webkit-linear-gradient(top, #120fc2, #392bb8);
+      background-image: -moz-linear-gradient(top, #120fc2, #392bb8);
+      background-image: -ms-linear-gradient(top, #120fc2, #392bb8);
+      background-image: -o-linear-gradient(top, #120fc2, #392bb8);
+      background-image: linear-gradient(to bottom, #120fc2, #392bb8);
+      -webkit-border-radius: 10;
+      -moz-border-radius: 10;
+      border-radius: 10px;
+      border: none;
+      font-family: Arial;
+      color: #ffffff;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    .btnn:hover {
+      background: #3cb0fd;
+      background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body style="background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(4,4,82,1) 0%);">
+  <div class="container mt-5 bg-white" style="padding:20px; border-radius:20px">
+    <div class="card mt-5">
+      <div class="card-header text-center py-3 text-bold">
+        <h1>Shortest Path Finder</i></h1>
+      </div>
+      <div class="px-3">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#ID</th>
+              <th scope="col">From</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Distance(km)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in total_path %}
+            <tr>
+              <th scope="row">{{i.id}}</th>
+              <td>{{i.source_district}}</td>
+              <td>{{i.destination_district}}</td>
+              <td>{{i.distance}}</td>
+            </tr>
+            {% endfor%}
+          </tbody>
+        </table>
+      </div>
+      <div class="px-3 py-4">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="row g-1">
+            <div class="col-5">
+              {{ form.source_district.label_tag }}
+              {{form.source_district}}</div>
+            <div class="col-5">
+              {{ form.destination_district.label_tag }}
+              {{form.destination_district}}</div>
+            <div class="col-2 mt-4">
+              <button class="btnn btn-lg w-100" type="submit">
+                Find Distance
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Error(s):</strong>
+            <ul>
+                {% for field_errors in form.errors.values %}
+                    {% for error in field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+      {% if shortest_distance is not None %}
+      <div class="px-3">
+        <h4>Shortest Distance: {{ shortest_distance }} km</h4>
+        <h3 style="
+    background-color: lightgreen;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 6px;
+    width: 55%;
+"> The Shortest path is : {{shortest_path}}</h3>
+      </div>
+
+      {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>
